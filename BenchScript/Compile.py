@@ -24,7 +24,9 @@ class ScriptCompiler:
               "<<": ">>",
               "[": "]"}
 
-    def __init__(self):
+    def __init__(self, main_method: str):
+        self._main = main_method
+        self._main_var = []
         self._string_list = []
         self._vars = []
         self._method = []
@@ -319,6 +321,9 @@ class ScriptCompiler:
         line_list = line.split(",")
         line_list = list(map(lambda s: s.split(":")[-1].strip(), line_list))
 
+        if name == self._main:
+            self._main_var.extend(line_list)
+
         for i in line_list:
             self._method_var.append({"method": self._method[-1],
                                      "name": i})
@@ -339,17 +344,25 @@ class ScriptCompiler:
 
         return "return {}".format(f_string)
 
+    def run_method(self, spaces: int):
+
+        ret_list = ["\n", "def run(args_dict: dict):"]
+
+        ret_line = "return {}(".format(self._main) + ("args_dict['{}'], " * len(self._main_var))[:-2] + ")"
+        ret_line = (spaces * " ") + ret_line.format(*self._main_var)
+        return ret_list + [ret_line]
+
     def read_file(self,
                   fp,
                   space_count: int):
         spaces = 0
         with open(fp) as f:
             line = f.readline()
-            self._string_list.extend(["from Script.Datatypes.Arrays import *",
-                                      "from Script.Datatypes.Primitives import *",
-                                      "from Script.PreBuilt import *",
-                                      "from Script.Datatypes.Lists import *",
-                                      "from Script.Datatypes.Matrices import *",
+            self._string_list.extend(["from BenchScript.Datatypes.Arrays import *",
+                                      "from BenchScript.Datatypes.Primitives import *",
+                                      "from BenchScript.PreBuilt import *",
+                                      "from BenchScript.Datatypes.Lists import *",
+                                      "from BenchScript.Datatypes.Matrices import *",
                                       "",
                                       ""])
             while line:
@@ -386,6 +399,8 @@ class ScriptCompiler:
                     spaces -= space_count
 
                 line = f.readline()
+
+            self._string_list.extend(self.run_method(spaces))
 
     def compile(self, save_path):
         c = ["\n" + i for i in self._string_list]

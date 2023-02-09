@@ -1,6 +1,6 @@
 import copy
-from Script.Datatypes.Primitives import Integer, Double, Boolean, String
-from Script.Datatypes.Arrays import StringArray, Array
+from BenchScript.Datatypes.Primitives import Integer, Double, Boolean, String
+from BenchScript.Datatypes.Arrays import StringArray, Array
 import sympy
 
 
