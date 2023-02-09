@@ -5,7 +5,6 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='BenchScript',
-    python_requires='3.10.0',
     packages=['BenchScript'],
     version='0.0.3',
     license='MIT',
