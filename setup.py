@@ -7,7 +7,7 @@ setuptools.setup(
     name='BenchScript',
     python_requires='>=3.10',
     packages=['BenchScript', 'BenchScript.Datatypes'],
-    version='0.0.4',
+    version='0.0.5',
     license='MIT',
     description='A mathematical based scripting language',
     long_description=long_description,
@@ -27,7 +27,7 @@ setuptools.setup(
 
     keywords=["pypi", "BenchScript"],  # descriptive meta-data
     classifiers=[  # https://pypi.org/classifiers
-        'Development Status :: 4 - Alpha',
+        'Development Status :: 5 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Documentation',
         'License :: OSI Approved :: MIT License',
